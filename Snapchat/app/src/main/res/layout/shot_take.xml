@@ -8,11 +8,27 @@
     tools:context="com.littlebiig.snapchat.shotTake">
 
 
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="appareilphoto"
-    android:textSize="50dp"/>
+
+
+    <ImageView
+        android:id="@+id/ImageView"
+        android:layout_width="326dp"
+        android:layout_height="398dp"
+        tools:layout_editor_absoluteY="3dp"
+        tools:layout_editor_absoluteX="29dp" />
+
+
+    <VideoView
+        android:id="@+id/VideoView"
+        android:layout_width="332dp"
+        android:layout_height="423dp"
+        tools:layout_editor_absoluteY="3dp"
+        tools:layout_editor_absoluteX="26dp" />
+
+
+
+
+
     <LinearLayout
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
