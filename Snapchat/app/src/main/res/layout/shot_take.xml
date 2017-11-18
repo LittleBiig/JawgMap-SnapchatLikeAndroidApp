@@ -5,25 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.littlebiig.snapchat.mainActivity">
+    tools:context="com.littlebiig.snapchat.shotTake">
 
 
-    <RelativeLayout
-        android:id="@+id/mainActivity_mapFragment"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent">
-        <fragment
-
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:name ="com.littlebiig.snapchat.map_mapFragment"
-            tools:layout="@layout/fragment_map"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true" />
-
-    </RelativeLayout>
-
-
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="appareilphoto"
+    android:textSize="50dp"/>
     <LinearLayout
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
@@ -31,27 +20,30 @@
 
         >
         <Button
-            android:id="@+id/main_activity_captureMedia_button"
+            android:id="@+id/shot_take_capturePhoto_button"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_weight="1"
             android:layout_margin="20dp"
-            android:text="Photo / Video"
+            android:text="Photo"
             android:textColor="#ffff"
             android:background="@color/colorPrimaryDark"
 
 
             />
-
-        <ImageButton
-            android:id="@+id/main_activity_seeStory_button"
+        <Button
+            android:id="@+id/shot_take_captureVideo_button"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_weight="4"
+            android:layout_weight="1"
             android:layout_margin="20dp"
-            android:background="@drawable/lollipopbackground"
-            ></ImageButton>
+            android:textColor="#ffff"
+            android:text="Video"
 
+            android:background="@color/colorAccent"
+
+
+            />
     </LinearLayout>
 
 
