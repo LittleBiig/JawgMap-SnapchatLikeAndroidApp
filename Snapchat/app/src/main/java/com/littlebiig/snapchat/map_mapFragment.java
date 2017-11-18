@@ -15,23 +15,42 @@ import android.view.LayoutInflater;
         import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-        import com.mapbox.mapboxsdk.Mapbox;
-        import com.mapbox.mapboxsdk.annotations.Marker;
-        import com.mapbox.mapboxsdk.annotations.MarkerOptions;
-        import com.mapbox.mapboxsdk.geometry.LatLng;
-        import com.mapbox.mapboxsdk.maps.MapView;
-        import com.mapbox.mapboxsdk.maps.MapboxMap;
-        import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.mapbox.mapboxsdk.Mapbox;
+import com.mapbox.mapboxsdk.annotations.Marker;
+import com.mapbox.mapboxsdk.annotations.MarkerOptions;
+import com.mapbox.mapboxsdk.camera.CameraPosition;
+import com.mapbox.mapboxsdk.geometry.LatLng;
+import com.mapbox.mapboxsdk.maps.MapView;
+import com.mapbox.mapboxsdk.maps.MapboxMap;
+import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
+
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ListIterator;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import javax.net.ssl.HttpsURLConnection;
 
 /**
  * Created by trunk on 25/10/2017.
  */
 
 public class map_mapFragment extends Fragment {
-    private static final int MY_PERMISSIONS_REQUEST_LOCATION = 0;
     private MapView mapView;
     private LatLng mLatLng;
-
+    private static final double DISTANCE_BETWEEN = 5000;
 
     @Nullable
     @Override
@@ -61,7 +80,7 @@ public class map_mapFragment extends Fragment {
 
                 getLoca.checkLocationPermission();
 
-                getLoca.locationManager.requestLocationUpdates(getLoca.bestLocationProvider, 10000, 10,getLoca.locationListener=new LocationListener() {
+                getLoca.locationManager.requestLocationUpdates(getLoca.bestLocationProvider, 20000, 10,getLoca.locationListener=new LocationListener() {
 
                     public Location location;
 
@@ -84,18 +103,21 @@ public class map_mapFragment extends Fragment {
                     public void onLocationChanged(Location location) {
                         mapboxMap.clear();
                         mLatLng = new LatLng(location.getLatitude(), location.getLongitude());
-                        mapboxMap.addMarker(new MarkerOptions()
-                                .position(new LatLng(0, 0))
-                                .title("image")
-                        );
-                        mapboxMap.addMarker(new MarkerOptions()
-                                .position(new LatLng(70, 0))
-                                .title("image2")
-                        );
-                        mapboxMap.addMarker(new MarkerOptions()
-                                .position(new LatLng(mLatLng.getLatitude(), mLatLng.getLongitude()))
-                                .title("YOU")
-                        );
+                        mapboxMap.setCameraPosition(new CameraPosition.Builder()
+                                .target(mLatLng)
+                                .zoom(11)
+                                .build());
+                        requestPicture(mLatLng,new VolleyCallback(){
+                            @Override
+                            public void onSuccess(List<MarkerOptions> result){
+                                ListIterator<MarkerOptions> li=result.listIterator();
+                                while (li.hasNext()) {
+                                    mapboxMap.addMarker(li.next());
+                                }
+                            }
+                        });
+
+
 
                     }
                 });
@@ -113,11 +135,11 @@ public class map_mapFragment extends Fragment {
                         //parent.setLayoutParams(new LinearLayout.LayoutParams(
                         //        ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
                         //parent.setOrientation(LinearLayout.VERTICAL);
-
-                        Intent intent = new Intent(getActivity(),map_displayPicture.class);
-                        intent.putExtra("id",marker.getTitle());
-                        startActivity(intent);
-
+                        if(!TextUtils.equals(marker.getTitle(),"YOU")) {
+                            Intent intent = new Intent(getActivity(), map_displayPicture.class);
+                            intent.putExtra("id", marker.getTitle());
+                            startActivity(intent);
+                        }
 
                         return parent;
                     }
@@ -126,10 +148,60 @@ public class map_mapFragment extends Fragment {
             }
         });
 
+    }
+
+    private void requestPicture(final LatLng mLatLng,final VolleyCallback callback) {
 
 
+
+        String url = "https://snapchat-5f9c8.firebaseio.com/files.json";
+
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            JSONArray array=response.getJSONArray("pictures");
+                            List<MarkerOptions> Markers = new ArrayList<MarkerOptions>();
+                            for (int i = 0; i < array.length(); i++) {
+                                JSONObject c = array.getJSONObject(i);
+                                String lat = c.getString("Lat");
+                                String lng = c.getString("Lng");
+                                String name = c.getString("Name");
+
+                                LatLng latLng = new LatLng( Double.parseDouble(lat), Double.parseDouble(lng));
+                                float[] result=new float[3];
+                                Location.distanceBetween(latLng.getLatitude(),latLng.getLongitude(),mLatLng.getLatitude(),mLatLng.getLongitude(),result);
+                                if(result[0]<DISTANCE_BETWEEN) {
+                                    Markers.add(new MarkerOptions()
+                                            .position(new LatLng(latLng.getLatitude(), latLng.getLongitude()))
+                                            .title(name));
+                                }
+                            }
+                            Markers.add(new MarkerOptions()
+                                    .position(new LatLng(mLatLng.getLatitude(), mLatLng.getLongitude()))
+                                    .title("YOU"));
+                            callback.onSuccess(Markers);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO Auto-generated method stub
+
+                    }
+                });
+
+        // Access the RequestQueue through your singleton class.
+        MySingleton.getInstance(getActivity().getApplicationContext()).addToRequestQueue(jsObjRequest);
 
     }
+
 
 
     @Override
