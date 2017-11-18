@@ -12,14 +12,18 @@
         android:id="@+id/mainActivity_mapFragment"
         android:layout_height="match_parent"
         android:layout_width="match_parent">
-        <fragment
+        <com.mapbox.mapboxsdk.maps.MapView
+            android:layout_gravity="center"
 
+            android:id="@+id/mapView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:name ="com.littlebiig.snapchat.map_mapFragment"
-            tools:layout="@layout/fragment_map"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true" />
+            mapbox:mapbox_cameraTargetLat="45.783966"
+            mapbox:mapbox_cameraTargetLng="4.870057"
+            mapbox:mapbox_styleUrl="@string/mapbox_style_mapbox_streets"
+            mapbox:mapbox_cameraTilt="60"
+            mapbox:mapbox_cameraZoom="12"
+            mapbox:mapbox_uiRotateGestures="true"/>
 
     </RelativeLayout>
 

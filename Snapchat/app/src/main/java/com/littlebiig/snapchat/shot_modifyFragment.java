@@ -8,7 +8,7 @@ import android.widget.Button;
 
 
 
-public class modifyFragment extends AppCompatActivity {
+public class shot_modifyFragment extends AppCompatActivity {
 
     private Button mCancelButton;
     private Button mConfirmButton;
@@ -17,7 +17,7 @@ public class modifyFragment extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.shot_modify);
+        setContentView(R.layout.shot_modify_fragment);
 
 
         mCancelButton = (Button) findViewById(R.id.modify_cancel_button);
@@ -27,7 +27,7 @@ public class modifyFragment extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 //                function takePhoto (AXEL)
-            onBackPressed();
+                onBackPressed();
             }
         });
 
@@ -35,7 +35,7 @@ public class modifyFragment extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 //                function takeVideo (AXEL)
-                Intent confirmActivity = new Intent(modifyFragment.this, confirmFragment.class);
+                Intent confirmActivity = new Intent(shot_modifyFragment.this, shot_confirmFragment.class);
                 startActivity(confirmActivity);
             }
         });

@@ -19,17 +19,17 @@
         <activity android:name=".mainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".map_mapFragment" />
+        <activity android:name=".shot_Take" />
+        <activity android:name=".map_displayPicture" />
+        <activity android:name=".shot_confirmFragment" />
+        <activity android:name=".map_getLocation" />
 
-        <activity android:name=".modifyFragment" />
-        <activity android:name=".confirmFragment"/>
-        <activity android:name=".shotTake" />
-
-        <activity
-            android:name=".map_displayPicture"
-            android:label="@string/title_display_picture"></activity>
+        <activity android:name=".shot_modifyFragment"></activity>
     </application>
 
 </manifest>

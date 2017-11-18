@@ -47,7 +47,7 @@ import android.widget.VideoView;
  * Created by Little on 22/11/2017.
  */
 
-public class shotTake extends Activity {
+public class shot_Take extends Activity {
 
 
     public static final int REQUEST_CAPTURE = 1;
@@ -58,7 +58,7 @@ public class shotTake extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.shot_take); //envoie la vue définie dans activity_main
+        setContentView(R.layout.shot_take); //envoie la vue définie dans main_activity
 
         Button click = (Button)findViewById(R.id.shot_take_capturePhoto_button);
         resultphoto = (ImageView)findViewById(R.id.ImageView);

@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class confirmFragment extends AppCompatActivity {
+public class shot_confirmFragment extends AppCompatActivity {
 
 
     private EditText mDescriptionInput;
@@ -17,7 +17,7 @@ public class confirmFragment extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.shot_confirm);
+        setContentView(R.layout.shot_confirm_fragment);
         mDescriptionInput = (EditText) findViewById(R.id.confirm_description_input);
         mPublishButton = (Button) findViewById(R.id.confirm_publish_button);
         mPublishButton.setEnabled(false);
