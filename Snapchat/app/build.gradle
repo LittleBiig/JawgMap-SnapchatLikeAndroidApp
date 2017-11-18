@@ -4,8 +4,8 @@ android {
     compileSdkVersion 26
     buildToolsVersion "26.0.2"
     defaultConfig {
-        applicationId "com.littlebiig.snapchat"
-        minSdkVersion 21
+        applicationId "com.tbuonomo.jawgmapsample"
+        minSdkVersion 19
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
@@ -15,6 +15,18 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            Properties properties = new Properties()
+            properties.load(project.rootProject.file('local.properties').newDataInputStream())
+            def token = properties.get("maptoken")
+            buildConfigField "String", "MAP_TOKEN", "${token}"
+        }
+
+        debug {
+            Properties properties = new Properties()
+            properties.load(project.rootProject.file('local.properties').newDataInputStream())
+            buildConfigField "String", "JAWG_API_KEY", "\"${properties.get("jawgApiKey")}\""
+            buildConfigField "String", "MAP_BOX_TOKEN", "\"${properties.get("mapBoxToken")}\""
         }
     }
 }
@@ -24,7 +36,13 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:26.+'
+
+
+    compile('com.mapbox.mapboxsdk:mapbox-android-sdk:5.2.0-beta.1@aar') {
+        transitive = true
+    }
+    compile 'com.android.support:appcompat-v7:26.0.0-alpha1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.android.support:design:26.1.0'
     testCompile 'junit:junit:4.12'
 }
