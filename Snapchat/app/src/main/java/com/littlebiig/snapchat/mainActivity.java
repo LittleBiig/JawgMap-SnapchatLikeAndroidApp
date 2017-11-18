@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class captureFragment extends AppCompatActivity {
+public class mainActivity extends AppCompatActivity {
 
     private Button mCapturePhotoButton;
     private Button mCaptureVideoButton;
@@ -15,15 +15,15 @@ public class captureFragment extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.welcomescreen);
-        mCapturePhotoButton = (Button) findViewById(R.id.welcomeScreen_capturePhoto_button);
-        mCaptureVideoButton = (Button) findViewById(R.id.welcomeScreen_captureVideo_button);
+        setContentView(R.layout.main_activity);
+        mCapturePhotoButton = (Button) findViewById(R.id.mainActivity_capturePhoto_button);
+        mCaptureVideoButton = (Button) findViewById(R.id.mainActivity_captureVideo_button);
 
         mCapturePhotoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                function takePhoto (AXEL)
-                Intent modifyActivity = new Intent(captureFragment.this, modifyFragment.class);
+                Intent modifyActivity = new Intent(mainActivity.this, modifyFragment.class);
                 startActivity(modifyActivity);
             }
         });
@@ -32,7 +32,7 @@ public class captureFragment extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 //                function takeVideo (AXEL)
-                Intent modifyActivity = new Intent(captureFragment.this, modifyFragment.class);
+                Intent modifyActivity = new Intent(mainActivity.this, modifyFragment.class);
                 startActivity(modifyActivity);
             }
         });

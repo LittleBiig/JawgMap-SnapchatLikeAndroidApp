@@ -7,7 +7,7 @@ import android.widget.ImageView;
 
 //import com.tbuonomo.jawgmapsample.R;
 
-public class displayPicture extends Activity {
+public class map_displayPicture extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,7 +17,7 @@ public class displayPicture extends Activity {
 
 
         //img.setImageResource(getResources().getIdentifier(id, "drawable", getPackageName()));
-        setContentView(R.layout.display_picture);
+        setContentView(R.layout.map_display_picture);
         ImageView img= (ImageView) findViewById(R.id.imageView);
         //img.setImageResource(R.drawable.image);
         img.setImageResource(getResources().getIdentifier(id, "drawable", getPackageName()));

@@ -2,31 +2,16 @@ package com.littlebiig.snapchat;
 
 
 
-import android.Manifest;
-        import android.app.Activity;
-        import android.content.Intent;
-        import android.graphics.Bitmap;
-        import android.graphics.BitmapFactory;
-        import android.support.annotation.NonNull;
+import android.content.Intent;
+import android.support.annotation.NonNull;
         import android.support.v4.app.Fragment;
-        import android.content.Context;
-        import android.content.pm.PackageManager;
-        import android.location.Criteria;
-        import android.location.Location;
-        import android.location.LocationListener;
-        import android.location.LocationManager;
-        import android.location.LocationProvider;
-        import android.os.Bundle;
+import android.os.Bundle;
         import android.support.annotation.Nullable;
-        import android.support.v4.app.ActivityCompat;
-        import android.support.v4.content.ContextCompat;
-        import android.text.TextUtils;
-        import android.util.Log;
-        import android.view.LayoutInflater;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
         import android.view.View;
         import android.view.ViewGroup;
-        import android.widget.ImageView;
-        import android.widget.LinearLayout;
+import android.widget.LinearLayout;
 
         import com.mapbox.mapboxsdk.Mapbox;
         import com.mapbox.mapboxsdk.annotations.Marker;
@@ -36,17 +21,11 @@ import android.Manifest;
         import com.mapbox.mapboxsdk.maps.MapboxMap;
         import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 
-        import java.net.URL;
-        import java.util.ArrayList;
-
-        import static android.content.pm.PackageManager.PERMISSION_GRANTED;
-        import static com.littlebiig.snapchat.getLocation.MY_PERMISSIONS_REQUEST_LOCATION;
-
 /**
  * Created by trunk on 25/10/2017.
  */
 
-public class mapFragment extends Fragment {
+public class map_mapFragment extends Fragment {
     private static final int MY_PERMISSIONS_REQUEST_LOCATION = 0;
     private MapView mapView;
 
@@ -62,7 +41,7 @@ public class mapFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        final getLocation getLoca= new getLocation(getActivity().getApplicationContext(),getActivity());
+        final map_getLocation getLoca= new map_getLocation(getActivity().getApplicationContext(),getActivity());
         getLoca.checkLocationPermission();
 
 
@@ -108,14 +87,14 @@ public class mapFragment extends Fragment {
 
                         if (TextUtils.equals(marker.getTitle(), getString(R.string.custom_window_marker_title_spain))) {
 
-                            Intent intent = new Intent(getActivity(),displayPicture.class);
+                            Intent intent = new Intent(getActivity(),map_displayPicture.class);
                             intent.putExtra("id","image");
                             startActivity(intent);
 
                         } else if (TextUtils.equals(marker.getTitle(), getString(R.string.custom_window_marker_title_egypt))) {
                             //countryFlagImage.setImageDrawable(ContextCompat.getDrawable(
                             //getActivity().getApplicationContext(), R.drawable.egypt));
-                            Intent intent = new Intent(getActivity(),displayPicture.class);
+                            Intent intent = new Intent(getActivity(),map_displayPicture.class);
                             intent.putExtra("id","image2");
                             startActivity(intent);
                         } else {

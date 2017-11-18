@@ -17,7 +17,7 @@ public class modifyFragment extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.modify);
+        setContentView(R.layout.shot_modify);
 
 
         mCancelButton = (Button) findViewById(R.id.modify_cancel_button);
