@@ -27,14 +27,16 @@ public class map_getLocation implements ActivityCompat.OnRequestPermissionsResul
     public Context context;
     public Activity activity;
     public LocationListener locationListener;
-    public Location lastLocation;
+    public String bestLocationProvider;
+    public LocationManager locationManager;
     map_getLocation(Context context, Activity activity) {
+
         this.context=context;
         this.activity=activity;
 
     }
 
-    public boolean checkLocationPermission() {
+    public void checkLocationPermission() {
         if (ContextCompat.checkSelfPermission(this.context,
                 android.Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -69,9 +71,9 @@ public class map_getLocation implements ActivityCompat.OnRequestPermissionsResul
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                         MY_PERMISSIONS_REQUEST_LOCATION);
             }
-            return false;
+
         } else {
-            return true;
+            setLastLocation();
         }
     }
 
@@ -83,57 +85,7 @@ public class map_getLocation implements ActivityCompat.OnRequestPermissionsResul
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    LocationManager locationManager = (LocationManager)this.context.getSystemService(Context.LOCATION_SERVICE);
-                    ArrayList<LocationProvider> providers = new ArrayList<LocationProvider>();
-                    //ArrayList<String> names = locationManager.getProviders(true);
-                    Criteria critere = new Criteria();
-                    // Pour indiquer la précision voulue
-                    // On peut mettre ACCURACY_FINE pour une haute précision ou ACCURACY_COARSE pour une moins bonne précision
-                    critere.setAccuracy(Criteria.ACCURACY_FINE);
-                    // Est-ce que le fournisseur doit être capable de donner une altitude ?
-                    critere.setAltitudeRequired(false);
-                    // Est-ce que le fournisseur doit être capable de donner une direction ?
-                    critere.setBearingRequired(false);
-                    // Est-ce que le fournisseur peut être payant ?
-                    critere.setCostAllowed(false);
-                    // Pour indiquer la consommation d'énergie demandée
-                    // Criteria.POWER_HIGH pour une haute consommation, Criteria.POWER_MEDIUM pour une consommation moyenne et Criteria.POWER_LOW pour une basse consommation
-                    critere.setPowerRequirement(Criteria.POWER_HIGH);
-                    // Est-ce que le fournisseur doit être capable de donner une vitesse ?
-                    critere.setSpeedRequired(false);
-
-                    String bestProvider=locationManager.getBestProvider(critere,true);
-
-                    int permissionCheck = ContextCompat.checkSelfPermission(this.activity,
-                            android.Manifest.permission.ACCESS_FINE_LOCATION);
-
-                    //final Location location=locationManager.getLastKnownLocation(bestProvider);
-                    locationManager.requestLocationUpdates(bestProvider, 10000, 10, this.locationListener=new LocationListener() {
-
-                        public Location location;
-
-                        @Override
-                        public void onStatusChanged(String provider, int status, Bundle extras) {
-
-                        }
-
-                        @Override
-                        public void onProviderEnabled(String provider) {
-
-                        }
-
-                        @Override
-                        public void onProviderDisabled(String provider) {
-
-                        }
-
-                        @Override
-                        public void onLocationChanged(Location location) {
-                            lastLocation=location;
-
-                        }
-                    });
-
+                    setLastLocation();
 
                 } else {
                     android.os.Process.killProcess(android.os.Process.myPid());
@@ -148,6 +100,35 @@ public class map_getLocation implements ActivityCompat.OnRequestPermissionsResul
             // other 'case' lines to check for other
             // permissions this app might request
         }
+    }
+
+    public void setLastLocation () {
+        LocationManager locationManager = (LocationManager)this.context.getSystemService(Context.LOCATION_SERVICE);
+        ArrayList<LocationProvider> providers = new ArrayList<LocationProvider>();
+        //ArrayList<String> names = locationManager.getProviders(true);
+        Criteria critere = new Criteria();
+        // Pour indiquer la précision voulue
+        // On peut mettre ACCURACY_FINE pour une haute précision ou ACCURACY_COARSE pour une moins bonne précision
+        critere.setAccuracy(Criteria.ACCURACY_FINE);
+        // Est-ce que le fournisseur doit être capable de donner une altitude ?
+        critere.setAltitudeRequired(false);
+        // Est-ce que le fournisseur doit être capable de donner une direction ?
+        critere.setBearingRequired(false);
+        // Est-ce que le fournisseur peut être payant ?
+        critere.setCostAllowed(false);
+        // Pour indiquer la consommation d'énergie demandée
+        // Criteria.POWER_HIGH pour une haute consommation, Criteria.POWER_MEDIUM pour une consommation moyenne et Criteria.POWER_LOW pour une basse consommation
+        critere.setPowerRequirement(Criteria.POWER_HIGH);
+        // Est-ce que le fournisseur doit être capable de donner une vitesse ?
+        critere.setSpeedRequired(false);
+
+        this.bestLocationProvider=locationManager.getBestProvider(critere,true);
+        this.locationManager=locationManager;
+        int permissionCheck = ContextCompat.checkSelfPermission(this.activity,
+                android.Manifest.permission.ACCESS_FINE_LOCATION);
+
+        //final Location location=locationManager.getLastKnownLocation(bestProvider);
+
     }
 
 

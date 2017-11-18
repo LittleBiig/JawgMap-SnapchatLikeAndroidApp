@@ -3,6 +3,8 @@ package com.littlebiig.snapchat;
 
 
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationListener;
 import android.support.annotation.NonNull;
         import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -28,7 +30,7 @@ import android.widget.LinearLayout;
 public class map_mapFragment extends Fragment {
     private static final int MY_PERMISSIONS_REQUEST_LOCATION = 0;
     private MapView mapView;
-
+    private LatLng mLatLng;
 
 
     @Nullable
@@ -42,7 +44,6 @@ public class map_mapFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         final map_getLocation getLoca= new map_getLocation(getActivity().getApplicationContext(),getActivity());
-        getLoca.checkLocationPermission();
 
 
 
@@ -54,19 +55,53 @@ public class map_mapFragment extends Fragment {
         mapView.onCreate(savedInstanceState);
 
 
-
-
         mapView.getMapAsync(new OnMapReadyCallback() {
             @Override
-            public void onMapReady(MapboxMap mapboxMap) {
-                mapboxMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(0, 0))
-                        .title("Spain")
+            public void onMapReady(final MapboxMap mapboxMap) {
+
+                getLoca.checkLocationPermission();
+
+                getLoca.locationManager.requestLocationUpdates(getLoca.bestLocationProvider, 10000, 10,getLoca.locationListener=new LocationListener() {
+
+                    public Location location;
+
+                    @Override
+                    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+                    }
+
+                    @Override
+                    public void onProviderEnabled(String provider) {
+
+                    }
+
+                    @Override
+                    public void onProviderDisabled(String provider) {
+
+                    }
+
+                    @Override
+                    public void onLocationChanged(Location location) {
+                        mapboxMap.clear();
+                        mLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+                        mapboxMap.addMarker(new MarkerOptions()
+                                .position(new LatLng(0, 0))
+                                .title("image")
                         );
-                mapboxMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(70, 0))
-                        .title("Egypt")
+                        mapboxMap.addMarker(new MarkerOptions()
+                                .position(new LatLng(70, 0))
+                                .title("image2")
                         );
+                        mapboxMap.addMarker(new MarkerOptions()
+                                .position(new LatLng(mLatLng.getLatitude(), mLatLng.getLongitude()))
+                                .title("YOU")
+                        );
+
+                    }
+                });
+
+
+
                 mapboxMap.setInfoWindowAdapter(new MapboxMap.InfoWindowAdapter() {
                     @Nullable
                     @Override
@@ -79,36 +114,10 @@ public class map_mapFragment extends Fragment {
                         //        ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
                         //parent.setOrientation(LinearLayout.VERTICAL);
 
-                        // Depending on the marker latitude, the correct image source is used. If you
-                        // have many markers using different images, extending Marker and
-                        // baseMarkerOptions, adding additional options such as the image, might be
-                        // a better choice.
-                        //ImageView countryFlagImage = new ImageView(getActivity().getApplicationContext());
+                        Intent intent = new Intent(getActivity(),map_displayPicture.class);
+                        intent.putExtra("id",marker.getTitle());
+                        startActivity(intent);
 
-                        if (TextUtils.equals(marker.getTitle(), getString(R.string.custom_window_marker_title_spain))) {
-
-                            Intent intent = new Intent(getActivity(),map_displayPicture.class);
-                            intent.putExtra("id","image");
-                            startActivity(intent);
-
-                        } else if (TextUtils.equals(marker.getTitle(), getString(R.string.custom_window_marker_title_egypt))) {
-                            //countryFlagImage.setImageDrawable(ContextCompat.getDrawable(
-                            //getActivity().getApplicationContext(), R.drawable.egypt));
-                            Intent intent = new Intent(getActivity(),map_displayPicture.class);
-                            intent.putExtra("id","image2");
-                            startActivity(intent);
-                        } else {
-                            // By default all markers without a matching latitude will use the
-                            // Germany flag
-                            //countryFlagImage.setImageDrawable(ContextCompat.getDrawable(
-                            //getActivity().getApplicationContext(), R.drawable.flag_of_germany));
-                        }
-
-                        // Set the size of the image
-                        //countryFlagImage.setLayoutParams(new android.view.ViewGroup.LayoutParams(150, 100));
-
-                        // add the image view to the parent layout
-                        //parent.addView(countryFlagImage);
 
                         return parent;
                     }
@@ -116,7 +125,6 @@ public class map_mapFragment extends Fragment {
 
             }
         });
-
 
 
 
@@ -165,36 +173,7 @@ public class map_mapFragment extends Fragment {
         super.onSaveInstanceState(outState);
         mapView.onSaveInstanceState(outState);
     }
-    /*@Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case MY_PERMISSIONS_REQUEST_LOCATION: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-                    // permission was granted, yay! Do the
-                    // location-related task you need to do.
-                    if (ContextCompat.checkSelfPermission(this,
-                            Manifest.permission.ACCESS_FINE_LOCATION)
-                            == PackageManager.PERMISSION_GRANTED) {
-
-                        //Request location updates:
-                        locationManager.requestLocationUpdates(provider, 400, 1, this);
-                    }
-
-                } else {
-
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
-
-                }
-                return;
-            }
-
-        }
-    }*/
 
 }
 
