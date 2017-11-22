@@ -22,6 +22,8 @@
 
         <activity android:name=".modifyFragment" />
         <activity android:name=".confirmFragment"/>
+        <activity android:name=".shotTake" />
+
         <activity
             android:name=".map_displayPicture"
             android:label="@string/title_display_picture"></activity>
