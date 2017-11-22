@@ -22,13 +22,13 @@ import java.util.ArrayList;
  * Created by trunk on 25/10/2017.
  */
 
-public class getLocation implements ActivityCompat.OnRequestPermissionsResultCallback {
+public class map_getLocation implements ActivityCompat.OnRequestPermissionsResultCallback {
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     public Context context;
     public Activity activity;
     public LocationListener locationListener;
     public Location lastLocation;
-    getLocation(Context context,Activity activity) {
+    map_getLocation(Context context, Activity activity) {
         this.context=context;
         this.activity=activity;
 

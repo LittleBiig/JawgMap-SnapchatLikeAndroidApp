@@ -5,14 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.littlebiig.snapchat.captureFragment">
+    tools:context="com.littlebiig.snapchat.mainActivity">
 
 
     <fragment
         android:id="@+id/some_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name ="com.littlebiig.snapchat.mapFragment"
+        android:name ="com.littlebiig.snapchat.map_mapFragment"
         tools:layout="@layout/fragment_map"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
@@ -23,7 +23,7 @@
 
         >
         <Button
-            android:id="@+id/welcomeScreen_capturePhoto_button"
+            android:id="@+id/mainActivity_capturePhoto_button"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_weight="1"
@@ -35,7 +35,7 @@
 
             />
         <Button
-            android:id="@+id/welcomeScreen_captureVideo_button"
+            android:id="@+id/mainActivity_captureVideo_button"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_weight="1"

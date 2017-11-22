@@ -1,6 +1,5 @@
 package com.littlebiig.snapchat;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -18,7 +17,7 @@ public class confirmFragment extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.confirm);
+        setContentView(R.layout.shot_confirm);
         mDescriptionInput = (EditText) findViewById(R.id.confirm_description_input);
         mPublishButton = (Button) findViewById(R.id.confirm_publish_button);
         mPublishButton.setEnabled(false);
