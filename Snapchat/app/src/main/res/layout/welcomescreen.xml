@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:mapbox="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.littlebiig.snapchat.captureFragment">
+
+
+    <fragment
+        android:id="@+id/some_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:name ="com.littlebiig.snapchat.mapFragment"
+        tools:layout="@layout/fragment_map"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_gravity="bottom"
+
+        >
+        <Button
+            android:id="@+id/welcomeScreen_capturePhoto_button"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+            android:text="Photo"
+            android:textColor="#ffff"
+            android:background="@color/colorPrimaryDark"
+
+
+            />
+        <Button
+            android:id="@+id/welcomeScreen_captureVideo_button"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+            android:textColor="#ffff"
+            android:text="Video"
+
+            android:background="@color/colorAccent"
+
+
+            />
+    </LinearLayout>
+
+
+</FrameLayout>

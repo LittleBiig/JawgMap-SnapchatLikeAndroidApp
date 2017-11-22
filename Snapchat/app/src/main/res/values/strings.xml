@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Snapchat</string>
+    <string name="draw_marker_options_snippet">Snippet</string>
+    <string name="custom_window_marker_title_spain">Spain</string>
+    <string name="custom_window_marker_title_egypt">Egypt</string>
+    <string name="title_display_picture">displayPicture</string>
+    <string name="title_location_permission">permission</string>
+    <string name="text_location_permission">please</string>
+    <string name="ok">thanks</string>
 </resources>

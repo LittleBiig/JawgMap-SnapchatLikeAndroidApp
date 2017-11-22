@@ -15,9 +15,9 @@ public class captureFragment extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.capture);
-        mCapturePhotoButton = (Button) findViewById(R.id.capture_capturePhoto_button);
-        mCaptureVideoButton = (Button) findViewById(R.id.capture_captureVideo_button);
+        setContentView(R.layout.welcomescreen);
+        mCapturePhotoButton = (Button) findViewById(R.id.welcomeScreen_capturePhoto_button);
+        mCaptureVideoButton = (Button) findViewById(R.id.welcomeScreen_captureVideo_button);
 
         mCapturePhotoButton.setOnClickListener(new View.OnClickListener() {
             @Override
